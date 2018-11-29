@@ -1,5 +1,5 @@
 var obj = {
-    domain: 'http://localhost:8080',
+    domain: 'http://192.168.1.5:8080',
     client: 'http://localhost:3000'
 }
 

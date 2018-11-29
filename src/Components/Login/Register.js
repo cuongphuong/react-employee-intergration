@@ -1,61 +1,152 @@
 ﻿import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import './Register.css';
+import axios from 'axios';
+import { connect } from 'react-redux';
+
 class Register extends Component {
 
-    handleRegister(e) {
-        e.preventDefault();
-        var username = this.refs.username.value;
-        var password = this.refs.password.value;
-        var repassword = this.refs.repassword.value;
-
-        if (password === repassword) {
-            var formData = new FormData();
-            formData.append('username', username);
-            formData.append('password', password);
-            formData.append('repassword', repassword);
-
-            fetch('http://192.168.43.102/chat2/function/register.php', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => response.json())
-                .then(response => {
-                    alert(response.message);
-                })
-                .catch(error => console.log('Không thể kết nối đến server'));
-        } else {
-            alert('Xác nhận mật khẩu không khớp');
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: {
+                txtfullName: '',
+                txtuserName: '',
+                password: '',
+                enable: ''
+            },
+            roles: '',
+            getRoles: []
         }
     }
+
+    componentDidMount() {
+        axios({
+            url: this.props.SystemInfo.domain + '/users/get-all-role',
+            method: 'GET',
+            headers: {
+                Authorization: 'Bearer ' + this.props.StateApp.token,
+            }
+        }).then(res => {
+            this.setState({ getRoles: res.data });
+        }).catch(err => {
+            console.log(err)
+        });
+    }
+
+    onChange = (e) => {
+        var target = e.target;
+        var name = target.name;
+        var value = target.type === 'checkbox' ? target.checked : target.value;
+        this.setState({
+            user: {
+                [name]: value
+            }
+        });
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+
+        // for (const checkbox of this.selectedCheckboxes) {
+        //     console.log(checkbox, 'is selected.');
+        // }
+
+        // var { fullName, userName, password, enable } = this.state.user;
+        // axios({
+        //     url: this.props.SystemInfo.domain + '/users/create-user',
+        //     method: 'POST',
+        //     data: {
+        //         user: {
+        //             fullName: fullName,
+        //             userName: userName,
+        //             password: password, 
+        //             enable : enable
+        //         }
+        //     }
+
+        // }).then(res => {
+        //     console.log(res);
+        // }).catch(err => {
+        //     console.log(err)
+        // });
+        console.log(this.state.user);
+
+    }
+
     render() {
+        var { getRoles } = this.state;
+        var { txtfullName, txtuserName, password } = this.state.user;
         return (
-            <div className="login-form">
-                <form>
-                    <h2 className="text-center">Register</h2>
-                    <div className="form-group">
-                        <input ref="username" type="text" className="form-control" placeholder="Username" required="required" />
+            <div className="card p-10">
+                <form className="mt-20" onSubmit={this.handleSubmit}>
+                    <legend>Create Account</legend>
+                    <div className="form-label-group mt-20">
+                        <label>Full Name</label>
+                        <input 
+                            type="text"
+                            className="form-control"
+                            placeholder="Username"
+                            required="required"
+                            value={txtfullName}
+                            onChange={this.onChange}
+                        />
                     </div>
-                    <div className="form-group">
-                        <input ref="password" type="password" className="form-control" placeholder="Password" required="required" />
+                    <div className="form-label-group mt-20">
+                        <label>UserName</label>
+                        <input 
+                            type="text"
+                            className="form-control"
+                            placeholder="Username"
+                            required="required"
+                            value={txtuserName}
+                            onChange={this.onChange}
+                        />
                     </div>
-                    <div className="form-group">
-                        <input ref="repassword" type="password" className="form-control" placeholder="RePassword" required="required" />
+                    <div className="form-label-group mt-20">
+                        <label>Password</label>
+                        <input 
+                            type="password"
+                            className="form-control"
+                            placeholder="password"
+                            required="required"
+                            value={password}
+                            onChange={this.onChange}
+                        />
                     </div>
-                    {/* <div className="form-group">
-                        <input ref="avatar" type="file" className="form-control" name="avatar"/>
-                    </div> */}
-                    <div className="form-group">
-                        <button onClick={this.handleRegister.bind(this)} className="btn btn-primary btn-block">Register</button>
+
+                    <div className="mt-20">
+                        {this.createCheckboxes(getRoles)}
                     </div>
-                    <div className="clearfix">
-                        {/* <label className="pull-left checkbox-inline"><input type="checkbox" /> Remember me</label> */}
-                        {/* <a href="/" className="pull-right">Forgot Password?</a> */}
-                    </div>
+
+                    <button type="submit" className="btn btn-primary mt-20">Lưu lại</button>
                 </form>
-                <p className="text-center"><Link to="/login">I have a account</Link></p>
+
             </div>
         );
     }
+
+    createCheckboxes = (getRoles) => {
+        var result = null;
+        if (getRoles.length > 0) {
+            result = getRoles.map((role, index) => {
+                return (
+                    <div className="form-check" key={index} >
+                        <input className="form-check-input"
+                            name="roles"
+                            type="checkbox"
+                        />
+                        <label className="form-check-label">
+                            {role.functionName}
+                        </label>
+                    </div>
+
+                );
+            });
+        }
+        return result;
+    }
 }
 
-export default Register;
+export default connect(function (state) {
+    return { StateApp: state.StateApp, SystemInfo: state.SystemInfo }
+})(Register);
