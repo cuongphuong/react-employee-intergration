@@ -2,110 +2,104 @@
 import './Register.css';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import CheckboxList from './CheckBox/CheckboxList';
+import { truncate } from 'fs';
 
 class Register extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            user: {
-                txtfullName: '',
-                txtuserName: '',
-                password: '',
-                enable: ''
-            },
-            roles: '',
-            getRoles: []
-        }
-    }
-
-    componentDidMount() {
-        axios({
-            url: this.props.SystemInfo.domain + '/users/get-all-role',
-            method: 'GET',
-            headers: {
-                Authorization: 'Bearer ' + this.props.StateApp.token,
-            }
-        }).then(res => {
-            this.setState({ getRoles: res.data });
-        }).catch(err => {
-            console.log(err)
-        });
-    }
 
     onChange = (e) => {
         var target = e.target;
         var name = target.name;
-        var value = target.type === 'checkbox' ? target.checked : target.value;
-        this.setState({
-            user: {
-                [name]: value
+        //console.log(target.value);
+        var { dispatch } = this.props;
+        dispatch({
+            type: 'ADD_ROLES_APP',
+            item: {...this.props.Roles, user: {...this.props.Roles.user, [name] : target.value}}
+        })
+    }
+
+    customRoles = () =>{
+        var strRoles = "";
+        if (this.props.Roles ) {
+            
+        }
+        this.props.Roles.roles.forEach(element => {
+            if(element.status === true){
+                strRoles += element.functionID + ";";
+
             }
         });
+        return this.props.Roles.roles = strRoles;
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
-
+        this.customRoles();
         // for (const checkbox of this.selectedCheckboxes) {
         //     console.log(checkbox, 'is selected.');
         // }
 
-        // var { fullName, userName, password, enable } = this.state.user;
-        // axios({
-        //     url: this.props.SystemInfo.domain + '/users/create-user',
-        //     method: 'POST',
-        //     data: {
-        //         user: {
-        //             fullName: fullName,
-        //             userName: userName,
-        //             password: password, 
-        //             enable : enable
-        //         }
-        //     }
+        var { user, roles } = this.props.Roles;
+        var {history} = this.props;
+        axios({
+            url: this.props.SystemInfo.domain + '/users/create-user',
+            method: 'POST',
+            headers: {
+                Authorization: 'Bearer ' + this.props.StateApp.token,
+                ContentType : 'application/json',
+            },
+            data : {
+                user : user , 
+                roles : roles
 
-        // }).then(res => {
-        //     console.log(res);
-        // }).catch(err => {
-        //     console.log(err)
-        // });
-        console.log(this.state.user);
+            }, 
+
+        }).then(res => {
+            history.push("/dashboard");
+            
+        }).catch(err => {
+            console.log(err)
+        });
+       
+        console.log(this.props.Roles);
 
     }
 
     render() {
-        var { getRoles } = this.state;
-        var { txtfullName, txtuserName, password } = this.state.user;
+        var { fullName, userName, password } = this.props.Roles;
         return (
             <div className="card p-10">
                 <form className="mt-20" onSubmit={this.handleSubmit}>
                     <legend>Create Account</legend>
                     <div className="form-label-group mt-20">
                         <label>Full Name</label>
-                        <input 
+                        <input
+                            name="fullName"
                             type="text"
                             className="form-control"
                             placeholder="Username"
                             required="required"
-                            value={txtfullName}
+                            value={fullName}
                             onChange={this.onChange}
                         />
                     </div>
                     <div className="form-label-group mt-20">
                         <label>UserName</label>
-                        <input 
+                        <input
                             type="text"
+                            name ="userName"
                             className="form-control"
                             placeholder="Username"
                             required="required"
-                            value={txtuserName}
+                            value={userName}
                             onChange={this.onChange}
                         />
                     </div>
                     <div className="form-label-group mt-20">
                         <label>Password</label>
-                        <input 
+                        <input
                             type="password"
+                            name="password"
                             className="form-control"
                             placeholder="password"
                             required="required"
@@ -113,40 +107,16 @@ class Register extends Component {
                             onChange={this.onChange}
                         />
                     </div>
-
-                    <div className="mt-20">
-                        {this.createCheckboxes(getRoles)}
-                    </div>
-
-                    <button type="submit" className="btn btn-primary mt-20">Lưu lại</button>
+                        <CheckboxList></CheckboxList>
+                    <button type="submit" className="btn btn-primary mt-20">Save</button>
                 </form>
 
             </div>
         );
     }
 
-    createCheckboxes = (getRoles) => {
-        var result = null;
-        if (getRoles.length > 0) {
-            result = getRoles.map((role, index) => {
-                return (
-                    <div className="form-check" key={index} >
-                        <input className="form-check-input"
-                            name="roles"
-                            type="checkbox"
-                        />
-                        <label className="form-check-label">
-                            {role.functionName}
-                        </label>
-                    </div>
-
-                );
-            });
-        }
-        return result;
-    }
 }
 
 export default connect(function (state) {
-    return { StateApp: state.StateApp, SystemInfo: state.SystemInfo }
+    return { StateApp: state.StateApp, SystemInfo: state.SystemInfo, Roles : state.Roles }
 })(Register);

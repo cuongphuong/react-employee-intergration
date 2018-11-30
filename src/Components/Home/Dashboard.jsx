@@ -20,7 +20,7 @@ const Dashboard = ({ match, StateApp }) => {
                     <div className="container-fluid">
                         <Route path={match.url + "/vacationdays"} component={Vacationdays} />
                         <Route path={match.url + "/total-earnings"} component={TotalEarnings} />
-                        <Route path={ match.url + "/create-account"} component={Register}/>
+                        <Route path={ match.url + "/create-account"} component={Register} />
                         <Route path={ match.url + "/add-account"} component={addAccount}/>
                         <Route path={ match.url + "/notification"} component={Notification}/>
                     </div>
