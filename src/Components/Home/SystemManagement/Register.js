@@ -1,9 +1,8 @@
 ﻿import React, { Component } from 'react';
-import './Register.css';
+import '../../../styles/AddAccount.css';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import CheckboxList from './CheckBox/CheckboxList';
-import { truncate } from 'fs';
 
 class Register extends Component {
 
@@ -14,17 +13,17 @@ class Register extends Component {
         var { dispatch } = this.props;
         dispatch({
             type: 'ADD_ROLES_APP',
-            item: {...this.props.Roles, user: {...this.props.Roles.user, [name] : target.value}}
+            item: { ...this.props.Roles, user: { ...this.props.Roles.user, [name]: target.value } }
         })
     }
 
-    customRoles = () =>{
+    customRoles = () => {
         var strRoles = "";
-        if (this.props.Roles ) {
-            
+        if (this.props.Roles) {
+
         }
         this.props.Roles.roles.forEach(element => {
-            if(element.status === true){
+            if (element.status === true) {
                 strRoles += element.functionID + ";";
 
             }
@@ -40,27 +39,27 @@ class Register extends Component {
         // }
 
         var { user, roles } = this.props.Roles;
-        var {history} = this.props;
+        var { history } = this.props;
         axios({
             url: this.props.SystemInfo.domain + '/users/create-user',
             method: 'POST',
             headers: {
                 Authorization: 'Bearer ' + this.props.StateApp.token,
-                ContentType : 'application/json',
+                ContentType: 'application/json',
             },
-            data : {
-                user : user , 
-                roles : roles
+            data: {
+                user: user,
+                roles: roles
 
-            }, 
+            },
 
         }).then(res => {
             history.push("/dashboard");
-            
+
         }).catch(err => {
             console.log(err)
         });
-       
+
         console.log(this.props.Roles);
 
     }
@@ -87,7 +86,7 @@ class Register extends Component {
                         <label>UserName</label>
                         <input
                             type="text"
-                            name ="userName"
+                            name="userName"
                             className="form-control"
                             placeholder="Username"
                             required="required"
@@ -107,8 +106,11 @@ class Register extends Component {
                             onChange={this.onChange}
                         />
                     </div>
+                    <div className="form-label-group mt-20">
+                        <label>Permission</label>
                         <CheckboxList></CheckboxList>
-                    <button type="submit" className="btn btn-primary mt-20">Save</button>
+                    </div>
+                    <button type="submit" className="btn btn-primary mt-20">Thêm tài khoản</button>
                 </form>
 
             </div>
@@ -118,5 +120,5 @@ class Register extends Component {
 }
 
 export default connect(function (state) {
-    return { StateApp: state.StateApp, SystemInfo: state.SystemInfo, Roles : state.Roles }
+    return { StateApp: state.StateApp, SystemInfo: state.SystemInfo, Roles: state.Roles }
 })(Register);

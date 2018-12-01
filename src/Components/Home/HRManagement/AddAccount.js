@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import './Register.css';
+import '../../../styles/AddAccount.css';
 
-class addAccount extends Component {
+class AddAccount extends Component {
     render() {
         return (
-            <div className="card" className="p-10">
+            <div className="card p-10">
                 <form method="POST" className="mt-20">
                     <legend>Add Account</legend>
                     <div className="form-label-group mt-20">
@@ -34,4 +34,4 @@ class addAccount extends Component {
     }
 }
 
-export default addAccount;
+export default AddAccount;

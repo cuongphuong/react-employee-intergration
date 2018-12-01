@@ -43,7 +43,7 @@ class Home extends Component {
                     });
 
                     setTimeout(function () {
-                        window.location.href = '/dashboard'; 
+                        window.location.href = '/dashboard';
                     }, 1000)
                 }
             })
@@ -51,16 +51,19 @@ class Home extends Component {
                 global.setState({
                     isClick: false
                 });
-
-                if (error.response.status === 403) {
-                    global.setState({
-                        status: 1
-                    });
-                } else {
+                try {
+                    if (error.response.status === 403) {
+                        global.setState({
+                            status: 1
+                        });
+                    }
+                }
+                catch (err) {
                     global.setState({
                         status: 2
                     });
                 }
+
             });
     }
 
@@ -78,7 +81,7 @@ class Home extends Component {
                 <div className="login-form">
                     {
                         this.state.status === 1 ? <div className="scaleUp alert alert-danger" role="alert">Tên tài khoản hoặt mật khẩu không chính sác</div> :
-                            (this.state.status === 2 ? <div className="scaleUp alert alert-dark" role="alert">Lổi, vui lòng thử lại sau!.</div> :
+                            (this.state.status === 2 ? <div className="scaleUp alert alert-dark" role="alert">Không thể kết nối tới {this.props.SystemInfo.domain}.</div> :
                                 (this.state.status === 3 && this.state.isClick === false ? <div className="scaleUp alert alert-success" role="alert">
                                     Đăng nhập thành công, đang chuyển hướng...</div> : ''))
                     }

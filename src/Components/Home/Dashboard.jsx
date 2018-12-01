@@ -6,8 +6,8 @@ import { Redirect, Route } from 'react-router-dom';
 import Drawer from './Frame/Drawer';
 import Vacationdays from './InfomationIntergration/Vacationdays';
 import TotalEarnings from './InfomationIntergration/TotalEarnings';
-import Register from '../Login/Register';
-import addAccount from '../Login/addAccount';
+import Register from './SystemManagement/Register';
+import AddAccount from './HRManagement/AddAccount';
 import Notification from './Notification/Notification';
 
 const Dashboard = ({ match, StateApp }) => {
@@ -21,7 +21,7 @@ const Dashboard = ({ match, StateApp }) => {
                         <Route path={match.url + "/vacationdays"} component={Vacationdays} />
                         <Route path={match.url + "/total-earnings"} component={TotalEarnings} />
                         <Route path={ match.url + "/create-account"} component={Register} />
-                        <Route path={ match.url + "/add-account"} component={addAccount}/>
+                        <Route path={ match.url + "/add-account"} component={AddAccount}/>
                         <Route path={ match.url + "/notification"} component={Notification}/>
                     </div>
                 </div>

@@ -96,7 +96,9 @@ class Vacationdays extends Component {
                                                     <td>{e.gender === true ? "Nam" : "Nử"}</td>
                                                     <td>{e.vacationDays}</td>
                                                 </tr>
-                                        ) : 'Rỗng'
+                                        ) : <tr>
+                                                <td colSpan={8}>Rỗng</td>
+                                            </tr>
                                     }
                                 </tbody>
                             </table>
@@ -117,8 +119,7 @@ class Vacationdays extends Component {
                                         <div style={{ textAlign: 'center', padding: '10px' }}><img height="38px" src={this.props.SystemInfo.client + "/verify.gif"} alt="" /></div>
                             }
                         </div>
-                        :
-                        ''
+                        :''
                 }
             </div>
         );

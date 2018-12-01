@@ -96,7 +96,9 @@ class TotalEarnings extends Component {
                                                     <td>{e.gender === true ? "Nam" : "Nử"}</td>
                                                     <td>{e.totalEarnings}</td>
                                                 </tr>
-                                        ) : 'Rỗng'
+                                        ) : <tr>
+                                            <td colSpan={8}>Rỗng</td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>

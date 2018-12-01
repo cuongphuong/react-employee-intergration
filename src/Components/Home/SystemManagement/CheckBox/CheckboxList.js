@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 class CheckboxList extends Component {
 
     componentDidMount() {
-        var global = this;
         var { dispatch } = this.props;
         axios({
             url: this.props.SystemInfo.domain + '/users/get-all-role',
@@ -17,33 +16,29 @@ class CheckboxList extends Component {
             var data = res.data;
             var customData = [];
             data.forEach(item => {
-                customData = [...customData, {...item, status: false}];
+                customData = [...customData, { ...item, status: false }];
             });
             dispatch({
-                type : 'ADD_ROLES_APP', 
-                item : {...this.props.Roles, roles : customData }
+                type: 'ADD_ROLES_APP',
+                item: { ...this.props.Roles, roles: customData }
             });
         }).catch(err => {
             console.log(err)
         });
     }
 
-    
-
     render() {
         var { roles } = this.props.Roles;
         return (
-            <div className="mt-20">
+            <div>
                 {this.createCheckboxes(roles)}
             </div>
         );
     }
 
     onChange = (e) => {
-       var role = this.props.Roles.roles.find(i => i.functionID === parseInt(e.target.name));
+        var role = this.props.Roles.roles.find(i => i.functionID === parseInt(e.target.name, 10));
         role.status = !role.status;
-        // console.log(this.props.Roles.roles);
-       
     }
 
     createCheckboxes = (roles) => {
@@ -68,7 +63,6 @@ class CheckboxList extends Component {
     }
 }
 
-
 export default connect(function (state) {
-    return { StateApp: state.StateApp, SystemInfo: state.SystemInfo, Roles : state.Roles }
+    return { StateApp: state.StateApp, SystemInfo: state.SystemInfo, Roles: state.Roles }
 })(CheckboxList);
