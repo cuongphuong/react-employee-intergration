@@ -7,8 +7,10 @@ import Drawer from './Frame/Drawer';
 import Vacationdays from './InfomationIntergration/Vacationdays';
 import TotalEarnings from './InfomationIntergration/TotalEarnings';
 import Register from './SystemManagement/Register';
-import AddAccount from './HRManagement/AddAccount';
+import AddPersonal from './HRManagement/AddPersonal';
 import Notification from './Notification/Notification';
+import ShowUser from './SystemManagement/ShowUser';
+import ListPersonal from './HRManagement/ListPersonal';
 
 const Dashboard = ({ match, StateApp }) => {
     if (StateApp.isLogin === true) {
@@ -21,8 +23,10 @@ const Dashboard = ({ match, StateApp }) => {
                         <Route path={match.url + "/vacationdays"} component={Vacationdays} />
                         <Route path={match.url + "/total-earnings"} component={TotalEarnings} />
                         <Route path={ match.url + "/create-account"} component={Register} />
-                        <Route path={ match.url + "/add-account"} component={AddAccount}/>
+                        <Route path={ match.url + "/add-employee"} component={AddPersonal}/>
                         <Route path={ match.url + "/notification"} component={Notification}/>
+                        <Route path={ match.url + "/show-user"} component={ShowUser}/>
+                        <Route path={ match.url + "/list-employee"} component={ListPersonal}/>
                     </div>
                 </div>
             </div>

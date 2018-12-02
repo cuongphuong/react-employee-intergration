@@ -35,16 +35,6 @@ class Nav extends Component {
 
                 <div id="pg_nav_float_right">
                 <LoginComponent></LoginComponent>
-                    {/* <div id="pg_icon_function">
-                        <button className="none_button">
-                            <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" className="style-scope yt-icon" style={{ pointerEvents: 'none', display: 'block', width: '100%', height: '100%' }}>
-                                <g className="style-scope yt-icon">
-                                    <path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z" className="style-scope yt-icon">
-                                    </path>
-                                </g>
-                            </svg>
-                        </button>
-                    </div> */}
                 </div>
             </nav>
         );

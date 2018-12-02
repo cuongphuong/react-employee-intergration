@@ -351,9 +351,24 @@ body{
     color: #c5c5c5;
 }
 
+.pg_float_foreground{
+    position: relative;
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    background: rgba(245, 245, 245, 0.9);
+    overflow-y: scroll;
+    z-index: 10000;
+}
 
 
-
+.pg_btn_close_form{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
 /*==============================================================================================================*/
 
 

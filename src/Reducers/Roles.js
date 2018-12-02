@@ -6,6 +6,7 @@ var obj = {
         enable: true
     },
     roles: [],
+    strRole: ""
 }
 
 var Roles = (state = obj, action) => {

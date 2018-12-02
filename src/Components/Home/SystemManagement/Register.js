@@ -28,7 +28,7 @@ class Register extends Component {
 
             }
         });
-        return this.props.Roles.roles = strRoles;
+        return this.props.Roles.strRole = strRoles;
     }
 
     handleSubmit = (e) => {
@@ -38,7 +38,7 @@ class Register extends Component {
         //     console.log(checkbox, 'is selected.');
         // }
 
-        var { user, roles } = this.props.Roles;
+        var { user, strRole } = this.props.Roles;
         var { history } = this.props;
         axios({
             url: this.props.SystemInfo.domain + '/users/create-user',
@@ -49,12 +49,13 @@ class Register extends Component {
             },
             data: {
                 user: user,
-                roles: roles
+                roles: strRole
 
             },
 
         }).then(res => {
-            history.push("/dashboard");
+            alert("Thành công");
+            history.push("/dashboard/show-user");
 
         }).catch(err => {
             console.log(err)

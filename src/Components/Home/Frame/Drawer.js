@@ -120,7 +120,7 @@ class Drawer extends Component {
     mappingFunctionToView(){
         var res = null;
         res = Object.entries(this.state.customList).map((item, key) => {
-            return (<div key={key}><div className="pg_class_drawer_title">{item[0]}</div>
+            return (<div key={key}><div className="pg_class_drawer_title" style={{overflow: 'hidden'}}>{item[0]}</div>
                 {
                     item[1].map((itemMapping, index) => {
                         return (
