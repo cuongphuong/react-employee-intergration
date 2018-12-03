@@ -8,6 +8,7 @@ class AddAccount extends Component {
         super(props);
         this.state = {
             personal: {
+                id: '',
                 first_Name: '',
                 last_Name: '',
                 address1: '',
@@ -20,7 +21,29 @@ class AddAccount extends Component {
                 gender: true,
                 ethnicity: '',
                 shareholder_Status: false,
-            }
+            },
+        }
+    }
+
+    componentDidMount() {
+        var { match } = this.props;
+        if (match) {
+            var id = match.params.id;
+            axios({
+                method: 'GET',
+                url: `http://192.168.1.5:8080/hrm/get-peeonal?id=${id}`,
+                headers: {
+                    Authorization: 'Bearer ' + this.props.StateApp.token
+                }
+            }).then(res => {
+                var data = res.data;
+                // console.log(res);
+                this.setState({
+                    personal: data
+                });
+            }).catch(err => {
+                console.log(err);
+            });
         }
     }
 
@@ -36,28 +59,48 @@ class AddAccount extends Component {
 
     handleSubmit = () => {
         var { history } = this.props;
-        if (this.state.personal.first_Name.length > 0 && this.state.personal.last_Name.length > 0) {
-            const r = window.confirm("Do you want to add employee?");
-            if (r === true) {
-                axios({
-                    url: this.props.SystemInfo.domain + '/hrm/add-employee',
-                    method: 'POST',
-                    headers: {
-                        Authorization: 'Bearer ' + this.props.StateApp.token,
-                        ContentType: 'application/json',
-                    },
-                    data: this.state.personal
-
-                }).then(res => {
-                    alert("Thành công");
-                    history.push('/dashboard/list-employee');
-                }).catch(err => {
-                    console.log(err)
-                });
-            }
+        var { id } = this.state;
+        if (id) {
+            axios({
+                method: 'PUT',
+                url: `http://192.168.1.5:8080/hrm/get-peeonal?id=${id}`,
+                headers: {
+                    Authorization: 'Bearer ' + this.props.StateApp.token,
+                    ContentType: 'application/json',
+                },
+                data: this.state.personal
+            }).then(res => {
+                alert("Thành công");
+                history.push('/dashboard/list-employee');
+            }).catch(err => {
+                console.log(err)
+            });
         } else {
-            alert('First name and Last name require enter!')
+            if (this.state.personal.first_Name.length > 0 && this.state.personal.last_Name.length > 0) {
+                const r = window.confirm("Do you want to add employee?");
+                if (r === true) {
+                    axios({
+                        url: this.props.SystemInfo.domain + '/hrm/add-employee',
+                        method: 'POST',
+                        headers: {
+                            Authorization: 'Bearer ' + this.props.StateApp.token,
+                            ContentType: 'application/json',
+                        },
+                        data: this.state.personal
+
+                    }).then(res => {
+                        alert("Thành công");
+                        history.push('/dashboard/list-employee');
+                    }).catch(err => {
+                        console.log(err)
+                    });
+                }
+            } else {
+                alert('First name and Last name require enter!')
+            }
         }
+        //console.log(id);
+
 
     }
 

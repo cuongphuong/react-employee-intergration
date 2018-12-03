@@ -110,7 +110,7 @@ class ListPersonal extends Component {
                                                     <td>{e.shareholder_Status === true ? "Shareholder" : "Employee"}</td>
                                                     <td>
                                                         <button onClick={(item) => this.setDataToDetail(e)} style={{ marginRight: '5px' }} className="btn btn-primary">Chi tiết</button>
-                                                        <button className="btn btn-success">Update</button>
+                                                        <Link to={`/dashboard/add-employee/${e.employee_ID}/edit`} className="btn btn-success">Update</Link>
                                                     </td>
                                                 </tr>
                                         ) : <tr>
