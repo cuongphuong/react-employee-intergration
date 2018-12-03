@@ -23,10 +23,11 @@ const Dashboard = ({ match, StateApp }) => {
                         <Route path={match.url + "/vacationdays"} component={Vacationdays} />
                         <Route path={match.url + "/total-earnings"} component={TotalEarnings} />
                         <Route path={ match.url + "/create-account"} component={Register} />
-                        <Route path={ match.url + "/add-employee"} component={AddPersonal}/>
+                        <Route exact path={ match.url + "/add-employee"} component={AddPersonal}/>
                         <Route path={ match.url + "/notification"} component={Notification}/>
                         <Route path={ match.url + "/show-user"} component={ShowUser}/>
-                        <Route path={ match.url + "/list-employee"} component={ListPersonal}/>
+                        <Route path={ match.url + "/list-employee/"} component={ ListPersonal }/>
+                        <Route  path={ match.url + "/add-employee/:id/edit"} component={ AddPersonal }/>
                     </div>
                 </div>
             </div>
