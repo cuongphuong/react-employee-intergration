@@ -11,7 +11,6 @@ class ListPersonal extends Component {
             page: 0,
             isLoad: true,
             isLoadMore: 0,
-            dataMapping: [],
             dateDetail: {},
         }
     }
@@ -22,6 +21,7 @@ class ListPersonal extends Component {
     loadData(pageLoad, frefix) {
         //frefix = 0 is init load else 1 is loadmore
         var global = this;
+        var { dispatch } = this.props;
         this.setState({ page: this.state.page + 1 })
         axios({
             method: 'get',
@@ -33,9 +33,18 @@ class ListPersonal extends Component {
             .then(function (response) {
                 if (response.status === 200) {
                     var data = response.data;
-                    if (frefix === 0) global.setState({ isLoad: false, dataMapping: Object.values(data) })
-                    else {
-                        global.setState({ isLoadMore: 2, dataMapping: [...this.state.dataMapping, ...Object.values(data)] })
+                    if (frefix === 0) {
+                        global.setState({ isLoad: false })
+                        dispatch({
+                            type: 'PERSONAL_UPDATE_STATE',
+                            item: { ...global.props.PersonalState, dataMapping: Object.values(data) }
+                        });
+                    } else {
+                        dispatch({
+                            type: 'PERSONAL_UPDATE_STATE',
+                            item: { ...global.props.PersonalState, dataMapping: [...global.props.PersonalState.dataMapping, ...Object.values(data)] }
+                        });
+                        global.setState({ isLoadMore: 2 })
                         setTimeout(function () {
                             global.setState({ isLoadMore: 0 })
                         }, 500);
@@ -55,7 +64,7 @@ class ListPersonal extends Component {
     }
 
     setDataToDetail(item) {
-        this.setState({ dateDetail: item});
+        this.setState({ dateDetail: item });
         var { dispatch } = this.props;
         dispatch({
             type: 'TOGGLE_DETAIL_PERSONAL',
@@ -97,9 +106,9 @@ class ListPersonal extends Component {
                                 </thead>
                                 <tbody>
                                     {
-                                        this.state.dataMapping.length > 0 ? this.state.dataMapping.map(
+                                        this.props.PersonalState.dataMapping.length > 0 ? this.props.PersonalState.dataMapping.map(
                                             (e, i) =>
-                                                <tr key={i} style={{ backgroundColor: e.exist !== true ? '#00CCCC' : e.same === true ? '#CC9933' : '' }}>
+                                                <tr key={i} style={{ backgroundColor: e.exist !== true ? '#00CCCC' : e.same === false ? '#CC9933' : '' }}>
                                                     <td>{e.employee_ID}</td>
                                                     <td>{e.first_Name + " " + e.last_Name}</td>
                                                     <td>{e.phone_Number}</td>
@@ -124,7 +133,7 @@ class ListPersonal extends Component {
                     }
                 </div>
                 {
-                    this.state.dataMapping.length >= 2 ?
+                    this.props.PersonalState.dataMapping.length >= 2 ?
                         <div className="card" style={{ marginTop: '1px' }}>
                             {
                                 this.state.isLoadMore === 0 ?
@@ -146,6 +155,6 @@ class ListPersonal extends Component {
     }
 }
 export default connect(function (state) {
-    return { StateApp: state.StateApp, SystemInfo: state.SystemInfo, ToggleView: state.ToggleView }
+    return { PersonalState: state.PersonalState, StateApp: state.StateApp, SystemInfo: state.SystemInfo, ToggleView: state.ToggleView }
 })(ListPersonal);
 

@@ -358,11 +358,13 @@ body{
     bottom: 0px;
     right: 0px;
     left: 0px;
-    background: rgba(245, 245, 245, 0.9);
+    background: rgba(255, 255, 255, 0.9);
     overflow-y: scroll;
     z-index: 10000;
+    animation-name: scaleDetail;
+    animation-duration: 0.5s;
+    transition: all 0.5s 0s ease-in-out; 
 }
-
 
 .pg_btn_close_form{
     position: absolute;
@@ -370,6 +372,36 @@ body{
     right: 5px;
 }
 /*==============================================================================================================*/
+.pg_ig_scale_payrates{
+    animation-name: scalePayrates;
+    animation-duration: 0.5s;
+    transition: all 0.5s 0s ease-in-out; 
+    overflow: hidden;
+    height: 360px;
+}
 
+@keyframes scaleDetail {
+    from {
+        top: 250px;
+        right: 200px;
+        left: calc(100vh);
+        bottom: 250px;
+    }
+    to {
+        top: 0px;
+        right: 0px;
+        left: 0px;
+        bottom: 0px;
+    }
 
+}
 
+@keyframes scalePayrates {
+    from {
+        height: 0%;
+    }
+    form{
+        height: 100%;
+    }
+
+}
