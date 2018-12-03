@@ -22,16 +22,18 @@ class AddAccount extends Component {
                 ethnicity: '',
                 shareholder_Status: false,
             },
+            isUpdate : false
         }
     }
 
     componentDidMount() {
         var { match } = this.props;
-        if (match) {
+        if (match.params.id !== undefined) {
             var id = match.params.id;
+            this.setState({isUpdate: true})
             axios({
                 method: 'GET',
-                url: `http://192.168.1.5:8080/hrm/get-peeonal?id=${id}`,
+                url: `${this.props.SystemInfo.domain}/hrm/get-peeonal?id=${id}`,
                 headers: {
                     Authorization: 'Bearer ' + this.props.StateApp.token
                 }
@@ -63,14 +65,14 @@ class AddAccount extends Component {
         if (id) {
             axios({
                 method: 'PUT',
-                url: `http://192.168.1.5:8080/hrm/get-peeonal?id=${id}`,
+                url: `${this.props.SystemInfo.domain}/hrm/get-peeonal?id=${id}`,
                 headers: {
                     Authorization: 'Bearer ' + this.props.StateApp.token,
                     ContentType: 'application/json',
                 },
                 data: this.state.personal
             }).then(res => {
-                alert("Thành công");
+                alert("Successfuly.");
                 history.push('/dashboard/list-employee');
             }).catch(err => {
                 console.log(err)
@@ -89,7 +91,7 @@ class AddAccount extends Component {
                         data: this.state.personal
 
                     }).then(res => {
-                        alert("Thành công");
+                        alert("Successfuly.");
                         history.push('/dashboard/list-employee');
                     }).catch(err => {
                         console.log(err)
@@ -108,7 +110,7 @@ class AddAccount extends Component {
         return (
             <div className="card p-10">
                 <div className="mt-20">
-                    <legend>Add new personal</legend>
+                    <legend>{this.state.isUpdate === false ? 'Add new personal' : 'Update employee ' + this.state.personal.first_Name + " " + this.state.personal.last_Name}</legend>
                     <div className="row">
                         <div className="col-md-6">
                             <div className="form-label-group">
@@ -169,7 +171,7 @@ class AddAccount extends Component {
                             </div>
                         </div>
                     </div>
-                    <button onClick={this.handleSubmit} className="btn btn-primary mt-20">Add to personal</button>
+                    <button onClick={this.handleSubmit} className="btn btn-primary mt-20">{this.state.isUpdate === false ? 'Add to personal' : 'Update employee'}</button>
                 </div>
 
             </div>

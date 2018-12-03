@@ -380,6 +380,10 @@ body{
     height: 360px;
 }
 
+.pg_load_notification{
+    transition: all 0.6s 0s ease-in-out; 
+}
+
 @keyframes scaleDetail {
     from {
         top: 250px;

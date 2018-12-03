@@ -53,7 +53,7 @@ class Update extends Component {
                 },
                 data : userUpdate
             }).then(res => {
-                alert("Thành công");
+                alert("Successfuly.");
                 history.push('/dashboard/show-user');
             }).catch(err => {
                 console.log(err);
@@ -69,7 +69,7 @@ class Update extends Component {
         return (
             <div className="card p-10">
                 <form className="mt-20" onSubmit={this.handleSubmit}>
-                    <legend>Create Account</legend>
+                    <legend>{`Update user ${this.props.Roles.userUpdate.fullName}`}</legend>
                     <div className="form-label-group mt-20">
                         <label>Full Name</label>
                         <input
@@ -94,7 +94,7 @@ class Update extends Component {
                             onChange={this.onChange}
                         />
                     </div>
-                    <button type="submit" className="btn btn-primary mt-20">Thêm tài khoản</button>
+                    <button type="submit" className="btn btn-primary mt-20">Update user</button>
                 </form>
 
             </div>

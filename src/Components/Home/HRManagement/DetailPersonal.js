@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class DetailPersonal extends Component {
     constructor(props) {
@@ -197,11 +197,12 @@ class DetailPersonal extends Component {
     }
 
     changeUpTo() {
-        this.setState({ isUpTo: !this.state.isUpTo })
+
+        this.setState({ isUpTo: !this.state.isUpTo });
     }
 
-    deleteThis(id){
-        alert(id);
+    deleteThis(id) {
+        this.onCloseForm();
         var global = this;
         var { dispatch } = this.props;
         const r = window.confirm("This operation will delete on 2 database and related data");
@@ -215,13 +216,12 @@ class DetailPersonal extends Component {
             })
                 .then(function (response) {
                     if (response.status === 200) {
-                        console.log(response.data);
-                        if (response.data === true) {
+                        if (response.data > 0) {
+                            alert('Thành công');
                             var as = global.props.PersonalState.dataMapping.filter(i => i.employee_ID !== id);
-                            global.setState({ dataMapping: as })
                             dispatch({
                                 type: 'PERSONAL_UPDATE_STATE',
-                                item: { ...global.props.PersonalState, dataMapping: as }
+                                item: {...global.props.PersonalState, dataMapping: as}
                             });
                         }
                     }
@@ -251,7 +251,7 @@ class DetailPersonal extends Component {
                     </div>
                     <div className="col-md-4">
                         <div style={{ marginTop: "20px" }}>
-                            <Link to={`/dashboard/add-employee/${this.props.data.employee_ID}/edit`} style={{ marginRight: "10px" }} className="btn btn-success">Update this</Link>
+                            <Link onClick={() => this.onCloseForm()} to={`/dashboard/add-employee/${this.props.data.employee_ID}/edit`} style={{ marginRight: "10px" }} className="btn btn-success">Update this</Link>
                             <button onClick={(id) => this.deleteThis(this.props.data.employee_ID)} style={{ marginRight: "10px" }} className="btn btn-danger">Delete this</button>
                             {
                                 this.props.data.exist === false ? <button onClick={() => this.changeUpTo()} className="btn btn-danger">Up to Employees</button> : ''

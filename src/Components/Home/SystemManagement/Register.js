@@ -54,7 +54,7 @@ class Register extends Component {
             },
 
         }).then(res => {
-            alert("Thành công");
+            alert("Successfuly.");
             history.push("/dashboard/show-user");
 
         }).catch(err => {
@@ -111,7 +111,7 @@ class Register extends Component {
                         <label>Permission</label>
                         <CheckboxList></CheckboxList>
                     </div>
-                    <button type="submit" className="btn btn-primary mt-20">Thêm tài khoản</button>
+                    <button type="submit" className="btn btn-primary mt-20">Create new user</button>
                 </form>
 
             </div>

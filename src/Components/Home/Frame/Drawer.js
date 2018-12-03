@@ -79,7 +79,7 @@ class Drawer extends Component {
                 </div> {/* home */}
 
                 <div className="pg_class_drawer_block">
-                    <Link to="/about">
+                    <Link to="/dashboard/notifications">
                     <p id="pg_block_icon">
                         <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" style={{enableBackground: 'new 0 0 55 55'}} xmlSpace="preserve">
                         <g>
@@ -105,7 +105,7 @@ class Drawer extends Component {
                         </g>
                         </svg>
                     </p>
-                    <p id="pg_block_name">Thông báo</p>
+                    <p id="pg_block_name">Notifications</p>
                     </Link>
                 </div> {/* notificaiton */}
 
