@@ -1,5 +1,6 @@
 var obj = {
-    toggle_detail_personal: false
+    toggle_detail_personal: false,
+    toggle_payrates_add: false
 }
 
 var ToggleView = (state = obj, action) => {
