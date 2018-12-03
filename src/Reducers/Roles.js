@@ -1,8 +1,15 @@
 var obj = {
     user: {
+        id : '',
         fullName: '',
         userName: '',
         password: '',
+        enable: true
+    },
+    userUpdate: {
+        userID : '',
+        fullName: '',
+        userName: '',
         enable: true
     },
     roles: [],

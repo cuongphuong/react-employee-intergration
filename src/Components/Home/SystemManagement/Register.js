@@ -25,7 +25,7 @@ class Register extends Component {
         this.props.Roles.roles.forEach(element => {
             if (element.status === true) {
                 strRoles += element.functionID + ";";
-
+                
             }
         });
         return this.props.Roles.strRole = strRoles;

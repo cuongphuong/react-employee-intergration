@@ -11,6 +11,7 @@ import AddPersonal from './HRManagement/AddPersonal';
 import Notification from './Notification/Notification';
 import ShowUser from './SystemManagement/ShowUser';
 import ListPersonal from './HRManagement/ListPersonal';
+import Update from './SystemManagement/Update';
 
 const Dashboard = ({ match, StateApp }) => {
     if (StateApp.isLogin === true) {
@@ -28,6 +29,7 @@ const Dashboard = ({ match, StateApp }) => {
                         <Route path={ match.url + "/show-user"} component={ShowUser}/>
                         <Route path={ match.url + "/list-employee/"} component={ ListPersonal }/>
                         <Route  path={ match.url + "/add-employee/:id/edit"} component={ AddPersonal }/>
+                        <Route path={match.url + "/update-management/:id/edit"} component={Update} />
                     </div>
                 </div>
             </div>

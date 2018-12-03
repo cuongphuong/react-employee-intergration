@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 class DetailPersonal extends Component {
     constructor(props) {
@@ -250,7 +251,7 @@ class DetailPersonal extends Component {
                     </div>
                     <div className="col-md-4">
                         <div style={{ marginTop: "20px" }}>
-                            <button style={{ marginRight: "10px" }} className="btn btn-success">Update this</button>
+                            <Link to={`/dashboard/add-employee/${this.props.data.employee_ID}/edit`} style={{ marginRight: "10px" }} className="btn btn-success">Update this</Link>
                             <button onClick={(id) => this.deleteThis(this.props.data.employee_ID)} style={{ marginRight: "10px" }} className="btn btn-danger">Delete this</button>
                             {
                                 this.props.data.exist === false ? <button onClick={() => this.changeUpTo()} className="btn btn-danger">Up to Employees</button> : ''
