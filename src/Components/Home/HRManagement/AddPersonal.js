@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+﻿import React, { Component } from 'react';
 import '../../../styles/AddAccount.css';
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -62,10 +62,10 @@ class AddAccount extends Component {
     handleSubmit = () => {
         var { history } = this.props;
         var { id } = this.state;
-        if (id) {
+        if (this.props.match.params.id !== undefined) {
             axios({
                 method: 'PUT',
-                url: `${this.props.SystemInfo.domain}/hrm/get-peeonal?id=${id}`,
+                url: `${this.props.SystemInfo.domain}/hrm/update-employee`,
                 headers: {
                     Authorization: 'Bearer ' + this.props.StateApp.token,
                     ContentType: 'application/json',

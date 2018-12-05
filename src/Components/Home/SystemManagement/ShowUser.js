@@ -111,7 +111,8 @@ class ShowUser extends Component {
                                                     <td>{e.enable === true ? "Active" : "Block"}</td>
                                                     <td>
                                                         <Link to= {`/dashboard/update-management/${e.userID}/edit`} style={{ marginRight: '5px' }} className="btn btn-primary">Update</Link>
-                                                        <button onClick={() => this.deleteUser(e.userID, e.userName)} className="btn btn-danger">Delete</button>
+                                                        <button onClick={() => this.deleteUser(e.userID, e.userName)} style={{ marginRight: '5px' }} className="btn btn-danger">Delete</button>
+                                                        <Link className="btn btn-danger" to={`/dashboard/access-control/${e.userID}`} >Change Permission</Link>
                                                     </td>
                                                 </tr>
                                         ) : <tr>

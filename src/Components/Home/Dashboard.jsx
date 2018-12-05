@@ -13,6 +13,7 @@ import ShowUser from './SystemManagement/ShowUser';
 import ListPersonal from './HRManagement/ListPersonal';
 import Update from './SystemManagement/Update';
 import BenefitPlans from './InfomationIntergration/BenefitPlans';
+import ChangeAccessControl from './SystemManagement/ChangeAccessControl';
 
 const Dashboard = ({ match, StateApp }) => {
     if (StateApp.isLogin === true) {
@@ -33,6 +34,7 @@ const Dashboard = ({ match, StateApp }) => {
                         <Route path={match.url + "/update-management/:id/edit"} component={Update} />
                         <Route path={ match.url + "/notifications"} component={Notification}/>
                         <Route path={ match.url + "/benefit-plans"} component={BenefitPlans}/>
+                        <Route exact path={ match.url + "/access-control/:id"} component={ChangeAccessControl}/>
                     </div>
                 </div>
             </div>

@@ -55,7 +55,6 @@ class BenefitPlans extends Component {
     }
 
     setDataToDetail(item) {
-        console.log(item);
         var { dispatch } = this.props;
         var global = this;
         axios({
